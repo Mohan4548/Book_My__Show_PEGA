@@ -1,0 +1,697 @@
+{
+  "movies": [
+    {
+      "id": 1,
+      "title": "Inception: 15th Anniversary IMAX",
+      "genre": "Sci-Fi / Action",
+      "durationMinutes": 148,
+      "showType": "Premium",
+      "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea.",
+      "posterUrl": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=800&q=80",
+      "createdAt": "2026-08-28T06:38:09.294Z"
+    },
+    {
+      "id": 2,
+      "title": "Avatar: The Way of Water 3D",
+      "genre": "Sci-Fi / Adventure",
+      "durationMinutes": 192,
+      "showType": "Premium",
+      "description": "Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns, Jake must work with Neytiri.",
+      "posterUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
+      "createdAt": "2026-08-28T06:38:09.302Z"
+    },
+    {
+      "id": 3,
+      "title": "The Dark Knight",
+      "genre": "Action / Crime",
+      "durationMinutes": 152,
+      "showType": "Standard",
+      "description": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological tests.",
+      "posterUrl": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80",
+      "createdAt": "2026-08-28T06:38:09.305Z"
+    },
+    {
+      "id": 4,
+      "title": "Interstellar: Standard Edition",
+      "genre": "Sci-Fi / Drama",
+      "durationMinutes": 169,
+      "showType": "Standard",
+      "description": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+      "posterUrl": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+      "createdAt": "2026-08-28T06:38:09.309Z"
+    }
+  ],
+  "shows": [
+    {
+      "id": 1,
+      "movieId": 1,
+      "theatre": "CineWave Dolby Cinema 1",
+      "location": "Downtown Hub, Screen A",
+      "dateTime": "2026-08-29T06:38:09.310Z",
+      "totalSeats": 60,
+      "seatsAvailable": 47,
+      "pricePerSeat": 22.5,
+      "createdAt": "2026-08-28T06:38:09.313Z"
+    },
+    {
+      "id": 2,
+      "movieId": 2,
+      "theatre": "CineWave IMAX Grand 3D",
+      "location": "Metro Plaza, IMAX Hall",
+      "dateTime": "2026-08-30T06:38:09.314Z",
+      "totalSeats": 100,
+      "seatsAvailable": 100,
+      "pricePerSeat": 28,
+      "createdAt": "2026-08-28T06:38:09.316Z"
+    },
+    {
+      "id": 3,
+      "movieId": 3,
+      "theatre": "CineWave Standard Multiplex",
+      "location": "Westside Mall, Screen 4",
+      "dateTime": "2026-08-28T18:38:09.317Z",
+      "totalSeats": 80,
+      "seatsAvailable": 80,
+      "pricePerSeat": 14,
+      "createdAt": "2026-08-28T06:38:09.319Z"
+    },
+    {
+      "id": 4,
+      "movieId": 4,
+      "theatre": "CineWave Standard Multiplex",
+      "location": "Eastside Square, Screen 2",
+      "dateTime": "2026-08-31T06:38:09.320Z",
+      "totalSeats": 75,
+      "seatsAvailable": 75,
+      "pricePerSeat": 12.5,
+      "createdAt": "2026-08-28T06:38:09.322Z"
+    }
+  ],
+  "booking_requests": [
+    {
+      "id": "CW-1001",
+      "customerName": "Alex Rivera",
+      "customerEmail": "alex.rivera@example.com",
+      "showId": 1,
+      "numTickets": 2,
+      "totalCost": 45,
+      "status": "Approval",
+      "confirmed": 1,
+      "assignedQueue": "PremiumShowQueue",
+      "rejectionReason": null,
+      "createdAt": "2026-08-28T06:36:09.323Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "CW-1002",
+      "customerName": "Sophia Chen",
+      "customerEmail": "sophia.chen@example.com",
+      "showId": 2,
+      "numTickets": 4,
+      "totalCost": 112,
+      "status": "Approval",
+      "confirmed": 1,
+      "assignedQueue": "PremiumShowQueue",
+      "rejectionReason": null,
+      "createdAt": "2026-08-27T02:38:09.323Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "CW-1003",
+      "customerName": "Marcus Vance",
+      "customerEmail": "marcus.vance@example.com",
+      "showId": 3,
+      "numTickets": 3,
+      "totalCost": 42,
+      "status": "Approval",
+      "confirmed": 1,
+      "assignedQueue": "StandardShowQueue",
+      "rejectionReason": null,
+      "createdAt": "2026-08-26T02:38:09.323Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "CW-1004",
+      "customerName": "Elena Rostova",
+      "customerEmail": "elena.r@example.com",
+      "showId": 1,
+      "numTickets": 1,
+      "totalCost": 22.5,
+      "status": "Resolved",
+      "confirmed": 1,
+      "assignedQueue": "PremiumShowQueue",
+      "rejectionReason": null,
+      "createdAt": "2026-08-28T01:38:09.323Z",
+      "resolvedAt": "2026-08-28T02:38:09.323Z"
+    },
+    {
+      "id": "CW-1005",
+      "customerName": "Test Automation User",
+      "customerEmail": "auto.test@cinewave.com",
+      "showId": 1,
+      "numTickets": 2,
+      "totalCost": 45,
+      "status": "Resolved",
+      "confirmed": 1,
+      "assignedQueue": "PremiumShowQueue",
+      "rejectionReason": null,
+      "createdAt": "2026-08-28T06:41:23.291Z",
+      "resolvedAt": "2026-08-28T06:41:23.322Z"
+    },
+    {
+      "id": "CW-1006",
+      "customerName": "Phase 2 Test User",
+      "customerEmail": "phase2.test@cinewave.com",
+      "showId": 1,
+      "numTickets": 2,
+      "totalCost": 45,
+      "status": "Availability Check",
+      "confirmed": 0,
+      "assignedQueue": "PremiumShowQueue",
+      "rejectionReason": null,
+      "createdAt": "2026-08-28T17:03:35.292Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "CW-1007",
+      "customerName": "Phase 2 Test User",
+      "customerEmail": "phase2.test@cinewave.com",
+      "showId": 1,
+      "numTickets": 2,
+      "totalCost": 45,
+      "status": "Approval",
+      "confirmed": 1,
+      "assignedQueue": "PremiumShowQueue",
+      "rejectionReason": null,
+      "createdAt": "2026-08-28T17:05:37.108Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "CW-1008",
+      "customerName": "Alice Premium",
+      "customerEmail": "alice@test.com",
+      "showId": 1,
+      "numTickets": 2,
+      "totalCost": 45,
+      "status": "Resolved",
+      "confirmed": 1,
+      "assignedQueue": "PremiumShowQueue",
+      "rejectionReason": null,
+      "createdAt": "2026-08-28T17:10:38.060Z",
+      "resolvedAt": "2026-08-28T17:10:38.133Z"
+    },
+    {
+      "id": "CW-1009",
+      "customerName": "Bob Standard",
+      "customerEmail": "bob@test.com",
+      "showId": 3,
+      "numTickets": 3,
+      "totalCost": 42,
+      "status": "Rejected",
+      "confirmed": 1,
+      "assignedQueue": "StandardShowQueue",
+      "rejectionReason": "Test rejection",
+      "createdAt": "2026-08-28T17:10:38.092Z",
+      "resolvedAt": "2026-08-28T17:10:55.165Z"
+    },
+    {
+      "id": "CW-1010",
+      "customerName": "Final Test Customer",
+      "customerEmail": "final.test@cinewave.com",
+      "showId": 1,
+      "numTickets": 2,
+      "totalCost": 45,
+      "status": "Resolved",
+      "confirmed": 1,
+      "assignedQueue": "PremiumShowQueue",
+      "rejectionReason": null,
+      "createdAt": "2026-08-29T10:49:47.688Z",
+      "resolvedAt": "2026-08-29T10:49:47.716Z"
+    },
+    {
+      "id": "CW-1011",
+      "customerName": "Rejected Customer",
+      "customerEmail": "reject@cinewave.com",
+      "showId": 3,
+      "numTickets": 1,
+      "totalCost": 14,
+      "status": "Rejected",
+      "confirmed": 1,
+      "assignedQueue": "StandardShowQueue",
+      "rejectionReason": "Audit Test Rejection",
+      "createdAt": "2026-08-29T10:49:51.830Z",
+      "resolvedAt": "2026-08-29T10:49:51.859Z"
+    },
+    {
+      "id": "CW-1012",
+      "customerName": "Automated Test User",
+      "customerEmail": "auto.test@cinewave.com",
+      "showId": 1,
+      "numTickets": 2,
+      "totalCost": 45,
+      "status": "Resolved",
+      "confirmed": 1,
+      "assignedQueue": "PremiumShowQueue",
+      "rejectionReason": null,
+      "createdAt": "2026-08-29T14:49:24.848Z",
+      "resolvedAt": "2026-08-29T14:49:24.874Z"
+    },
+    {
+      "id": "CW-1013",
+      "customerName": "ram",
+      "customerEmail": "ram@gmail.com",
+      "showId": 1,
+      "numTickets": 1,
+      "totalCost": 22.5,
+      "status": "Approval",
+      "confirmed": 1,
+      "assignedQueue": "PremiumShowQueue",
+      "rejectionReason": null,
+      "createdAt": "2026-08-29T14:50:10.506Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "CW-1014",
+      "customerName": "Seat Tester 1",
+      "customerEmail": "seat1@movexa.com",
+      "showId": 1,
+      "numTickets": 3,
+      "selectedSeats": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "totalCost": 67.5,
+      "status": "Resolved",
+      "confirmed": 1,
+      "assignedQueue": "PremiumShowQueue",
+      "rejectionReason": null,
+      "createdAt": "2026-08-29T15:57:46.025Z",
+      "resolvedAt": "2026-08-29T15:57:46.077Z"
+    },
+    {
+      "id": "CW-1015",
+      "customerName": "Morgan Vance",
+      "customerEmail": "morgan.vance@movexa.com",
+      "showId": 1,
+      "numTickets": 2,
+      "selectedSeats": [
+        "B1",
+        "B2"
+      ],
+      "totalCost": 45,
+      "status": "Resolved",
+      "confirmed": 1,
+      "assignedQueue": "PremiumShowQueue",
+      "rejectionReason": null,
+      "createdAt": "2026-08-29T16:03:49.724Z",
+      "resolvedAt": "2026-08-29T16:03:49.751Z"
+    }
+  ],
+  "case_audit_logs": [
+    {
+      "id": 1,
+      "bookingRequestId": "CW-1001",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (Alex Rivera)",
+      "details": "Submitted booking request for 2 ticket(s). Auto-assigned queue: PremiumShowQueue",
+      "timestamp": "2026-08-28T06:38:09.326Z"
+    },
+    {
+      "id": 2,
+      "bookingRequestId": "CW-1002",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (Sophia Chen)",
+      "details": "Submitted booking request for 4 ticket(s). Auto-assigned queue: PremiumShowQueue",
+      "timestamp": "2026-08-28T06:38:09.328Z"
+    },
+    {
+      "id": 3,
+      "bookingRequestId": "CW-1003",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (Marcus Vance)",
+      "details": "Submitted booking request for 3 ticket(s). Auto-assigned queue: StandardShowQueue",
+      "timestamp": "2026-08-28T06:38:09.332Z"
+    },
+    {
+      "id": 4,
+      "bookingRequestId": "CW-1004",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (Elena Rostova)",
+      "details": "Submitted booking request for 1 ticket(s). Auto-assigned queue: PremiumShowQueue",
+      "timestamp": "2026-08-28T06:38:09.334Z"
+    },
+    {
+      "id": 5,
+      "bookingRequestId": "CW-1004",
+      "stage": "Resolved",
+      "action": "Approved & Resolved",
+      "performedBy": "Staff Admin",
+      "details": "Ticket issued and correspondence email sent.",
+      "timestamp": "2026-08-28T06:38:09.337Z"
+    },
+    {
+      "id": 6,
+      "bookingRequestId": "CW-1005",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (Test Automation User)",
+      "details": "Submitted booking request for 2 ticket(s). Auto-assigned queue: PremiumShowQueue",
+      "timestamp": "2026-08-28T06:41:23.291Z"
+    },
+    {
+      "id": 7,
+      "bookingRequestId": "CW-1005",
+      "stage": "Availability Check",
+      "action": "Seat Validation Passed",
+      "performedBy": "System",
+      "details": "Verified availability: 60 seats available. Total cost calculated: $45.00. Case placed in pending customer confirmation.",
+      "timestamp": "2026-08-28T06:41:23.295Z"
+    },
+    {
+      "id": 8,
+      "bookingRequestId": "CW-1005",
+      "stage": "Approval",
+      "action": "Customer Confirmed Case",
+      "performedBy": "Customer (Test Automation User)",
+      "details": "Customer explicitly confirmed ticket request. Case routed to Work Queue [PremiumShowQueue] for Staff Approval.",
+      "timestamp": "2026-08-28T06:41:23.305Z"
+    },
+    {
+      "id": 9,
+      "bookingRequestId": "CW-1005",
+      "stage": "Booking Execution",
+      "action": "Deduct Seats & Execute Booking",
+      "performedBy": "Verification Bot",
+      "details": "Deducted 2 ticket(s) from Show 1. Remaining seats: 58.",
+      "timestamp": "2026-08-28T06:41:23.321Z"
+    },
+    {
+      "id": 10,
+      "bookingRequestId": "CW-1005",
+      "stage": "Resolved",
+      "action": "Case Resolved",
+      "performedBy": "Verification Bot",
+      "details": "Booking execution completed successfully. Ticket correspondence sent to customer.",
+      "timestamp": "2026-08-28T06:41:23.324Z"
+    },
+    {
+      "id": 11,
+      "bookingRequestId": "CW-1006",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (Phase 2 Test User)",
+      "details": "Submitted booking request for 2 ticket(s). Auto-assigned queue: PremiumShowQueue",
+      "timestamp": "2026-08-28T17:03:35.292Z"
+    },
+    {
+      "id": 12,
+      "bookingRequestId": "CW-1006",
+      "stage": "Availability Check",
+      "action": "Seat Validation Passed",
+      "performedBy": "System",
+      "details": "Verified availability: 58 seats available. Total cost calculated: $45.00. Case placed in pending customer confirmation.",
+      "timestamp": "2026-08-28T17:03:35.296Z"
+    },
+    {
+      "id": 13,
+      "bookingRequestId": "CW-1007",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (Phase 2 Test User)",
+      "details": "Submitted booking request for 2 ticket(s). Auto-assigned queue: PremiumShowQueue",
+      "timestamp": "2026-08-28T17:05:37.108Z"
+    },
+    {
+      "id": 14,
+      "bookingRequestId": "CW-1007",
+      "stage": "Approval",
+      "action": "Customer Confirmed Booking",
+      "performedBy": "Customer (Phase 2 Test User)",
+      "details": "Customer explicitly confirmed booking request. Seat availability re-verified (58 seats left). Case routed to Work Queue [PremiumShowQueue] for Staff Approval.",
+      "timestamp": "2026-08-28T17:05:37.120Z"
+    },
+    {
+      "id": 15,
+      "bookingRequestId": "CW-1008",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (Alice Premium)",
+      "details": "Submitted booking request for 2 ticket(s). Auto-assigned queue: PremiumShowQueue",
+      "timestamp": "2026-08-28T17:10:38.060Z"
+    },
+    {
+      "id": 16,
+      "bookingRequestId": "CW-1008",
+      "stage": "Approval",
+      "action": "Customer Confirmed Booking",
+      "performedBy": "Customer (Alice Premium)",
+      "details": "Customer explicitly confirmed booking request. Seat availability re-verified (58 seats left). Case routed to Work Queue [PremiumShowQueue] for Staff Approval.",
+      "timestamp": "2026-08-28T17:10:38.080Z"
+    },
+    {
+      "id": 17,
+      "bookingRequestId": "CW-1009",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (Bob Standard)",
+      "details": "Submitted booking request for 3 ticket(s). Auto-assigned queue: StandardShowQueue",
+      "timestamp": "2026-08-28T17:10:38.092Z"
+    },
+    {
+      "id": 18,
+      "bookingRequestId": "CW-1009",
+      "stage": "Approval",
+      "action": "Customer Confirmed Booking",
+      "performedBy": "Customer (Bob Standard)",
+      "details": "Customer explicitly confirmed booking request. Seat availability re-verified (80 seats left). Case routed to Work Queue [StandardShowQueue] for Staff Approval.",
+      "timestamp": "2026-08-28T17:10:38.107Z"
+    },
+    {
+      "id": 19,
+      "bookingRequestId": "CW-1008",
+      "stage": "Booking Execution",
+      "action": "Deduct Seats & Execute Booking",
+      "performedBy": "Manager",
+      "details": "Deducted 2 ticket(s) from Show 1. Remaining seats: 56.",
+      "timestamp": "2026-08-28T17:10:38.132Z"
+    },
+    {
+      "id": 20,
+      "bookingRequestId": "CW-1008",
+      "stage": "Resolved",
+      "action": "Case Resolved",
+      "performedBy": "Manager",
+      "details": "Booking execution completed successfully. Ticket correspondence sent to customer.",
+      "timestamp": "2026-08-28T17:10:38.136Z"
+    },
+    {
+      "id": 21,
+      "bookingRequestId": "CW-1009",
+      "stage": "Rejected",
+      "action": "Case Rejected",
+      "performedBy": "Manager",
+      "details": "Reason: Test rejection",
+      "timestamp": "2026-08-28T17:10:55.166Z"
+    },
+    {
+      "id": 22,
+      "bookingRequestId": "CW-1010",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (Final Test Customer)",
+      "details": "Submitted booking request for 2 ticket(s). Auto-assigned queue: PremiumShowQueue",
+      "timestamp": "2026-08-29T10:49:47.688Z"
+    },
+    {
+      "id": 23,
+      "bookingRequestId": "CW-1010",
+      "stage": "Approval",
+      "action": "Customer Confirmed Booking",
+      "performedBy": "Customer (Final Test Customer)",
+      "details": "Customer explicitly confirmed booking request. Seat availability re-verified (56 seats left). Case routed to Work Queue [PremiumShowQueue] for Staff Approval.",
+      "timestamp": "2026-08-29T10:49:47.699Z"
+    },
+    {
+      "id": 24,
+      "bookingRequestId": "CW-1010",
+      "stage": "Booking Execution",
+      "action": "Deduct Seats & Execute Booking",
+      "performedBy": "Lead Staff Approver",
+      "details": "Deducted 2 ticket(s) from Show 1. Remaining seats: 54.",
+      "timestamp": "2026-08-29T10:49:47.715Z"
+    },
+    {
+      "id": 25,
+      "bookingRequestId": "CW-1010",
+      "stage": "Resolved",
+      "action": "Case Resolved",
+      "performedBy": "Lead Staff Approver",
+      "details": "Booking execution completed successfully. Ticket correspondence sent to customer.",
+      "timestamp": "2026-08-29T10:49:47.718Z"
+    },
+    {
+      "id": 26,
+      "bookingRequestId": "CW-1011",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (Rejected Customer)",
+      "details": "Submitted booking request for 1 ticket(s). Auto-assigned queue: StandardShowQueue",
+      "timestamp": "2026-08-29T10:49:51.830Z"
+    },
+    {
+      "id": 27,
+      "bookingRequestId": "CW-1011",
+      "stage": "Approval",
+      "action": "Customer Confirmed Booking",
+      "performedBy": "Customer (Rejected Customer)",
+      "details": "Customer explicitly confirmed booking request. Seat availability re-verified (80 seats left). Case routed to Work Queue [StandardShowQueue] for Staff Approval.",
+      "timestamp": "2026-08-29T10:49:51.846Z"
+    },
+    {
+      "id": 28,
+      "bookingRequestId": "CW-1011",
+      "stage": "Rejected",
+      "action": "Case Rejected",
+      "performedBy": "Staff Reviewer",
+      "details": "Reason: Audit Test Rejection",
+      "timestamp": "2026-08-29T10:49:51.861Z"
+    },
+    {
+      "id": 29,
+      "bookingRequestId": "CW-1012",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (Automated Test User)",
+      "details": "Submitted booking request for 2 ticket(s). Auto-assigned queue: PremiumShowQueue",
+      "timestamp": "2026-08-29T14:49:24.848Z"
+    },
+    {
+      "id": 30,
+      "bookingRequestId": "CW-1012",
+      "stage": "Approval",
+      "action": "Customer Confirmed Booking",
+      "performedBy": "Customer (Automated Test User)",
+      "details": "Customer explicitly confirmed booking request. Seat availability re-verified (54 seats left). Case routed to Work Queue [PremiumShowQueue] for Staff Approval.",
+      "timestamp": "2026-08-29T14:49:24.859Z"
+    },
+    {
+      "id": 31,
+      "bookingRequestId": "CW-1012",
+      "stage": "Booking Execution",
+      "action": "Deduct Seats & Execute Booking",
+      "performedBy": "Auto Test Staff",
+      "details": "Deducted 2 ticket(s) from Show 1. Remaining seats: 52.",
+      "timestamp": "2026-08-29T14:49:24.873Z"
+    },
+    {
+      "id": 32,
+      "bookingRequestId": "CW-1012",
+      "stage": "Resolved",
+      "action": "Case Resolved",
+      "performedBy": "Auto Test Staff",
+      "details": "Booking execution completed successfully. Ticket correspondence sent to customer.",
+      "timestamp": "2026-08-29T14:49:24.876Z"
+    },
+    {
+      "id": 33,
+      "bookingRequestId": "CW-1013",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (ram)",
+      "details": "Submitted booking request for 1 ticket(s). Auto-assigned queue: PremiumShowQueue",
+      "timestamp": "2026-08-29T14:50:10.506Z"
+    },
+    {
+      "id": 34,
+      "bookingRequestId": "CW-1013",
+      "stage": "Approval",
+      "action": "Customer Confirmed Booking",
+      "performedBy": "Customer (ram)",
+      "details": "Customer explicitly confirmed booking request. Seat availability re-verified (52 seats left). Case routed to Work Queue [PremiumShowQueue] for Staff Approval.",
+      "timestamp": "2026-08-29T14:50:15.253Z"
+    },
+    {
+      "id": 35,
+      "bookingRequestId": "CW-1014",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (Seat Tester 1)",
+      "details": "Submitted booking request for 3 ticket(s) [Seats: A1, A2, A3]. Auto-assigned queue: PremiumShowQueue",
+      "timestamp": "2026-08-29T15:57:46.025Z"
+    },
+    {
+      "id": 36,
+      "bookingRequestId": "CW-1014",
+      "stage": "Approval",
+      "action": "Customer Confirmed Booking",
+      "performedBy": "Customer (Seat Tester 1)",
+      "details": "Customer explicitly confirmed booking request for seats [A1, A2, A3]. Case routed to Work Queue [PremiumShowQueue] for Staff Approval.",
+      "timestamp": "2026-08-29T15:57:46.055Z"
+    },
+    {
+      "id": 37,
+      "bookingRequestId": "CW-1014",
+      "stage": "Booking Execution",
+      "action": "Deduct Seats & Execute Booking",
+      "performedBy": "Seat Approver",
+      "details": "Deducted 3 ticket(s) [Seats: A1, A2, A3] from Show 1. Remaining seats: 49.",
+      "timestamp": "2026-08-29T15:57:46.076Z"
+    },
+    {
+      "id": 38,
+      "bookingRequestId": "CW-1014",
+      "stage": "Resolved",
+      "action": "Case Resolved",
+      "performedBy": "Seat Approver",
+      "details": "Booking execution completed successfully. Ticket correspondence sent to customer.",
+      "timestamp": "2026-08-29T15:57:46.081Z"
+    },
+    {
+      "id": 39,
+      "bookingRequestId": "CW-1015",
+      "stage": "Initial Stage",
+      "action": "Case Created",
+      "performedBy": "Customer (Morgan Vance)",
+      "details": "Submitted booking request for 2 ticket(s) [Seats: B1, B2]. Auto-assigned queue: PremiumShowQueue",
+      "timestamp": "2026-08-29T16:03:49.724Z"
+    },
+    {
+      "id": 40,
+      "bookingRequestId": "CW-1015",
+      "stage": "Approval",
+      "action": "Customer Confirmed Booking",
+      "performedBy": "Customer (Morgan Vance)",
+      "details": "Customer explicitly confirmed booking request for seats [B1, B2]. Case routed to Work Queue [PremiumShowQueue] for Staff Approval.",
+      "timestamp": "2026-08-29T16:03:49.736Z"
+    },
+    {
+      "id": 41,
+      "bookingRequestId": "CW-1015",
+      "stage": "Booking Execution",
+      "action": "Deduct Seats & Execute Booking",
+      "performedBy": "Senior Case Officer",
+      "details": "Deducted 2 ticket(s) [Seats: B1, B2] from Show 1. Remaining seats: 47.",
+      "timestamp": "2026-08-29T16:03:49.750Z"
+    },
+    {
+      "id": 42,
+      "bookingRequestId": "CW-1015",
+      "stage": "Resolved",
+      "action": "Case Resolved",
+      "performedBy": "Senior Case Officer",
+      "details": "Booking execution completed successfully. Ticket correspondence sent to customer.",
+      "timestamp": "2026-08-29T16:03:49.753Z"
+    }
+  ],
+  "counters": {
+    "movies": 4,
+    "shows": 4,
+    "caseId": 1015,
+    "auditLog": 42
+  }
+}

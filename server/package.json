@@ -1,0 +1,17 @@
+{
+  "name": "cinewave-server",
+  "version": "1.0.0",
+  "description": "Backend for CineWave Pega-Style Movie Ticket Booking System",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "seed": "node db/seed.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.13"
+  }
+}
