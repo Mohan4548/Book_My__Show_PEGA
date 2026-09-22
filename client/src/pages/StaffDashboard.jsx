@@ -30,6 +30,9 @@ export default function StaffDashboard({ onNavigateTab }) {
   const [selectedCaseForDetails, setSelectedCaseForDetails] = useState(null);
   const [rejectingCase, setRejectingCase] = useState(null);
   const [rejectionNote, setRejectionNote] = useState('');
+  const [transferringCase, setTransferringCase] = useState(null);
+  const [targetQueue, setTargetQueue] = useState('PremiumShowQueue');
+  const [targetUrgency, setTargetUrgency] = useState(50);
   const [actionLoading, setActionLoading] = useState(false);
   const [successBanner, setSuccessBanner] = useState('');
 
@@ -117,6 +120,36 @@ export default function StaffDashboard({ onNavigateTab }) {
       }
     } catch (err) {
       const msg = err.response?.data?.message || 'Failed to reject booking case.';
+      setError(msg);
+      addToast(msg, 'error');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  // Work Queue Transfer & Urgency Booster Handler
+  const handleTransferSubmit = async (e) => {
+    e.preventDefault();
+    if (!transferringCase) return;
+
+    try {
+      setActionLoading(true);
+      setError(null);
+      const res = await bookingApi.transfer(transferringCase.id, {
+        targetQueue,
+        urgency: targetUrgency,
+        staffName: 'Staff Manager (Work basket Router)',
+      });
+
+      if (res.data.success) {
+        setSuccessBanner(`Case ${transferringCase.id} transferred to ${targetQueue} with urgency rating ${targetUrgency}!`);
+        addToast(`Case ${transferringCase.id} transferred successfully`, 'success');
+        setTimeout(() => setSuccessBanner(''), 7000);
+        setTransferringCase(null);
+        fetchDashboardData();
+      }
+    } catch (err) {
+      const msg = err.response?.data?.message || 'Failed to transfer case.';
       setError(msg);
       addToast(msg, 'error');
     } finally {
@@ -562,6 +595,20 @@ export default function StaffDashboard({ onNavigateTab }) {
                               Audit
                             </button>
 
+                            {booking.status !== 'Resolved' && booking.status !== 'Rejected' && booking.status !== 'Cancelled' && (
+                              <button
+                                onClick={() => {
+                                  setTransferringCase(booking);
+                                  setTargetQueue(booking.assignedQueue);
+                                  setTargetUrgency(booking.urgency || 50);
+                                }}
+                                className="px-2.5 py-1 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/30 font-semibold transition-colors"
+                                title="Transfer Work Queue / Adjust Urgency"
+                              >
+                                Transfer
+                              </button>
+                            )}
+
                             {/* Phase 3 Approval & Rejection Actions (Rule #5) */}
                             {isPending && (
                               <>
@@ -604,6 +651,75 @@ export default function StaffDashboard({ onNavigateTab }) {
       {/* Audit Modal */}
       {selectedCaseForAudit && (
         <CaseAuditModal booking={selectedCaseForAudit} onClose={() => setSelectedCaseForAudit(null)} />
+      )}
+
+      {/* Work Queue Transfer Modal */}
+      {transferringCase && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-md p-6 space-y-4">
+            <h3 className="text-base font-extrabold text-purple-400 flex items-center gap-2">
+              <Layers className="w-5 h-5 text-purple-400" />
+              Transfer Work Queue & Urgency: {transferringCase.id}
+            </h3>
+
+            <p className="text-xs text-slate-400">
+              Customer: <strong className="text-slate-200">{transferringCase.customerName}</strong> &bull; Current Queue: <span className="font-mono text-cyan-400">{transferringCase.assignedQueue}</span>
+            </p>
+
+            <form onSubmit={handleTransferSubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-400 mb-1">Target Work Queue *</label>
+                <select
+                  value={targetQueue}
+                  onChange={(e) => setTargetQueue(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-100 focus:outline-none focus:border-purple-500"
+                >
+                  <option value="PremiumShowQueue">PremiumShowQueue (High Priority)</option>
+                  <option value="StandardShowQueue">StandardShowQueue (Standard)</option>
+                  <option value="VIPEscalationQueue">VIPEscalationQueue (Supervisor Review)</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-400 mb-1 flex items-center justify-between">
+                  <span>Urgency Booster Level (Pega Priority)</span>
+                  <strong className="text-purple-300 font-mono text-xs">{targetUrgency} / 100</strong>
+                </label>
+                <input
+                  type="range"
+                  min="10"
+                  max="100"
+                  step="10"
+                  value={targetUrgency}
+                  onChange={(e) => setTargetUrgency(Number(e.target.value))}
+                  className="w-full accent-purple-500"
+                />
+                <div className="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
+                  <span>10 (Low)</span>
+                  <span>50 (Normal)</span>
+                  <span>100 (Critical)</span>
+                </div>
+              </div>
+
+              <div className="flex gap-2 justify-end pt-2">
+                <button
+                  type="button"
+                  onClick={() => setTransferringCase(null)}
+                  className="px-4 py-2 bg-slate-800 text-slate-300 text-xs font-semibold rounded-xl"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={actionLoading}
+                  className="px-4 py-2 bg-purple-500 hover:bg-purple-400 text-slate-950 font-extrabold text-xs rounded-xl shadow-md shadow-purple-500/20"
+                >
+                  Confirm Queue Transfer
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
 
       {/* Reject Modal */}

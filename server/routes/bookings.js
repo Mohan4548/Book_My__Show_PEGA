@@ -181,7 +181,9 @@ router.post('/', (req, res) => {
     }
 
     // Backend Total Cost Calculation (Never trust client value)
-    const totalCost = ticketsCount * show.pricePerSeat;
+    const addons = Array.isArray(req.body.addons) ? req.body.addons : [];
+    const addonsTotal = addons.reduce((sum, item) => sum + (Number(item.price || 0) * Number(item.quantity || 1)), 0);
+    const totalCost = (ticketsCount * show.pricePerSeat) + addonsTotal;
 
     // Automatic Queue Routing based on Show.showType
     const assignedQueue = show.showType === 'Premium' ? 'PremiumShowQueue' : 'StandardShowQueue';
@@ -193,6 +195,7 @@ router.post('/', (req, res) => {
       showId: Number(showId),
       numTickets: ticketsCount,
       selectedSeats: seats,
+      addons,
       totalCost,
       status: 'Initial Stage',
       confirmed: false,
@@ -427,5 +430,105 @@ const handleRejectBooking = (req, res) => {
 // PUT & POST /api/bookings/:id/reject
 router.put('/:id/reject', handleRejectBooking);
 router.post('/:id/reject', handleRejectBooking);
+
+// PUT /api/bookings/:id/transfer (Pega Work Queue Re-assignment & Urgency Adjustment)
+router.put('/:id/transfer', (req, res) => {
+  try {
+    const { targetQueue, urgency, staffName } = req.body;
+    const reviewer = staffName || 'Staff Agent';
+
+    const booking = db.getBookingById(req.params.id);
+    if (!booking) {
+      return res.status(404).json({ success: false, message: 'Booking Case not found' });
+    }
+
+    if (booking.status === 'Resolved' || booking.status === 'Rejected' || booking.status === 'Cancelled') {
+      return res.status(400).json({ success: false, message: `Cannot transfer case in final state "${booking.status}"` });
+    }
+
+    const updatedQueue = targetQueue || booking.assignedQueue;
+    const updatedUrgency = urgency !== undefined ? Number(urgency) : (booking.urgency || 10);
+
+    const updatedCase = db.updateBookingCase(
+      booking.id,
+      {
+        assignedQueue: updatedQueue,
+        urgency: updatedUrgency,
+      },
+      {
+        stage: booking.status,
+        action: 'Case Work Queue Transferred',
+        performedBy: reviewer,
+        details: `Re-routed case to Work Queue [${updatedQueue}] with priority urgency level [${updatedUrgency}].`,
+      }
+    );
+
+    res.json({
+      success: true,
+      message: `Booking Case ${booking.id} transferred to ${updatedQueue} (Urgency: ${updatedUrgency}).`,
+      data: {
+        ...db.getBookingById(booking.id),
+        caseType: 'Movie Ticket Request',
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/bookings/:id/cancel (Pega Case Cancellation & Seat Refund Flow)
+router.post('/:id/cancel', (req, res) => {
+  try {
+    const { reason, requestedBy } = req.body;
+    const actor = requestedBy || 'Customer';
+    const cancelReason = reason || 'Customer requested ticket cancellation';
+
+    const booking = db.getBookingById(req.params.id);
+    if (!booking) {
+      return res.status(404).json({ success: false, message: 'Booking Case not found' });
+    }
+
+    if (booking.status === 'Cancelled' || booking.status === 'Rejected') {
+      return res.status(400).json({ success: false, message: `Case is already ${booking.status}` });
+    }
+
+    // If case was already Resolved, restore seats back to show
+    let restoredSeats = 0;
+    if (booking.status === 'Resolved' && booking.showId) {
+      const show = db.getShowById(booking.showId);
+      if (show) {
+        restoredSeats = booking.numTickets;
+        const newAvailable = Math.min(show.totalSeats, show.seatsAvailable + restoredSeats);
+        db.updateShow(show.id, { seatsAvailable: newAvailable });
+      }
+    }
+
+    const updatedCase = db.updateBookingCase(
+      booking.id,
+      {
+        status: 'Cancelled',
+        rejectionReason: `Cancelled: ${cancelReason}`,
+        resolvedAt: new Date().toISOString(),
+      },
+      {
+        stage: 'Cancelled',
+        action: 'Case Withdrawn & Refunded',
+        performedBy: actor,
+        details: `Case withdrawn. Reason: ${cancelReason}.${restoredSeats > 0 ? ` Restored ${restoredSeats} seat(s) back to inventory.` : ''}`,
+      }
+    );
+
+    res.json({
+      success: true,
+      message: `Booking Case ${booking.id} has been cancelled.${restoredSeats > 0 ? ` ${restoredSeats} seats restored to show.` : ''}`,
+      data: {
+        ...db.getBookingById(booking.id),
+        caseType: 'Movie Ticket Request',
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
 
 module.exports = router;

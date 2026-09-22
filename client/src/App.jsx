@@ -10,6 +10,7 @@ import StaffDashboard from './pages/StaffDashboard';
 import AdminCatalog from './pages/AdminCatalog';
 import CaseTracker from './pages/CaseTracker';
 import CustomerPortal from './pages/CustomerPortal';
+import AnalyticsPage from './pages/AnalyticsPage';
 import { ToastProvider } from './components/Toast';
 
 export default function App() {
@@ -83,6 +84,10 @@ export default function App() {
 
           {activeTab === 'admin' && (
             <AdminCatalog />
+          )}
+
+          {activeTab === 'analytics' && (
+            <AnalyticsPage />
           )}
         </main>
 

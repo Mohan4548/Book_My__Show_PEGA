@@ -32,10 +32,13 @@ export const bookingApi = {
   confirm: (id) => api.put(`/bookings/${id}/confirm`),
   approve: (id, data = {}) => api.put(`/bookings/${id}/approve`, data),
   reject: (id, data = {}) => api.put(`/bookings/${id}/reject`, data),
+  transfer: (id, data = {}) => api.put(`/bookings/${id}/transfer`, data),
+  cancel: (id, data = {}) => api.post(`/bookings/${id}/cancel`, data),
 };
 
 export const statsApi = {
   get: (params = {}) => api.get('/stats', { params }),
+  getAnalytics: (params = {}) => api.get('/stats/analytics', { params }),
 };
 
 export default api;

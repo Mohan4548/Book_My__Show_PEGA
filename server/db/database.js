@@ -208,6 +208,30 @@ module.exports = {
 
     const selectedSeats = Array.isArray(caseData.selectedSeats) ? caseData.selectedSeats : [];
     const numTickets = selectedSeats.length > 0 ? selectedSeats.length : Number(caseData.numTickets || 1);
+    const addons = Array.isArray(caseData.addons) ? caseData.addons : [];
+    const urgency = Number(caseData.urgency || (caseData.assignedQueue === 'PremiumShowQueue' ? 30 : 10));
+
+    // Calculate child cases if addons exist (Pega Child Case Creation)
+    const childCases = [];
+    if (addons.length > 0) {
+      if (!db.child_cases) db.child_cases = [];
+      addons.forEach((addon, idx) => {
+        const childId = `${caseId}-ADD${idx + 1}`;
+        const childObj = {
+          id: childId,
+          parentCaseId: caseId,
+          caseType: 'Food & Beverage Sub-Case',
+          name: addon.name,
+          category: addon.category || 'Concession',
+          price: Number(addon.price || 0),
+          quantity: Number(addon.quantity || 1),
+          status: 'Resolved-Approved',
+          createdAt: new Date().toISOString(),
+        };
+        db.child_cases.push(childObj);
+        childCases.push(childObj);
+      });
+    }
 
     const newBooking = {
       id: caseId,
@@ -217,6 +241,9 @@ module.exports = {
       numTickets,
       selectedSeats,
       totalCost: Number(caseData.totalCost),
+      addons,
+      childCases,
+      urgency,
       status: caseData.status || 'Initial Stage',
       confirmed: caseData.confirmed ? 1 : 0,
       assignedQueue: caseData.assignedQueue,
@@ -229,13 +256,14 @@ module.exports = {
 
     // Initial audit log
     db.counters.auditLog += 1;
+    const addonDetails = addons.length > 0 ? ` with ${addons.length} Add-on Sub-Case(s) [${addons.map(a => a.name).join(', ')}]` : '';
     db.case_audit_logs.push({
       id: db.counters.auditLog,
       bookingRequestId: caseId,
       stage: 'Initial Stage',
       action: 'Case Created',
       performedBy: 'Customer (' + caseData.customerName + ')',
-      details: `Submitted booking request for ${numTickets} ticket(s) [Seats: ${selectedSeats.join(', ') || 'N/A'}]. Auto-assigned queue: ${caseData.assignedQueue}`,
+      details: `Submitted booking request for ${numTickets} ticket(s) [Seats: ${selectedSeats.join(', ') || 'N/A'}]${addonDetails}. Auto-assigned queue: ${caseData.assignedQueue} (Urgency: ${urgency})`,
       timestamp: new Date().toISOString(),
     });
 
@@ -283,5 +311,9 @@ module.exports = {
     db.case_audit_logs.push(log);
     writeDb(db);
     return log;
+  },
+  getChildCasesForParent: (parentCaseId) => {
+    const db = readDb();
+    return (db.child_cases || []).filter(c => c.parentCaseId.toUpperCase() === parentCaseId.toUpperCase());
   },
 };

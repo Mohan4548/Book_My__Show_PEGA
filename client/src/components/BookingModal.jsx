@@ -27,11 +27,19 @@ function generateSeatLayout(totalSeats = 60) {
   return rows;
 }
 
+const ADDON_OPTIONS = [
+  { id: 'popcorn', name: 'Jumbo Popcorn & Drink Combo', price: 12.0, category: 'Concession', icon: '🍿' },
+  { id: 'nachos', name: 'Deluxe Cheese Nachos', price: 8.5, category: 'Concession', icon: '🧀' },
+  { id: 'lounge', name: 'VIP Lounge Pass Access', price: 15.0, category: 'VIP Service', icon: '🛋️' },
+  { id: 'parking', name: 'Reserved Valet Parking', price: 10.0, category: 'Facility', icon: '🚗' },
+];
+
 export default function BookingModal({ show, movie, isOpen, onClose, onBookingCompleted }) {
   const { addToast } = useToast();
   const [customerName, setCustomerName] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const [selectedAddons, setSelectedAddons] = useState([]);
   const [bookedSeats, setBookedSeats] = useState([]);
   const [loadingSeats, setLoadingSeats] = useState(false);
   const [shakingSeat, setShakingSeat] = useState(null);
@@ -48,6 +56,7 @@ export default function BookingModal({ show, movie, isOpen, onClose, onBookingCo
       setCustomerName('');
       setCustomerEmail('');
       setSelectedSeats([]);
+      setSelectedAddons([]);
       setErrorMsg('');
       setStep('form');
       setCreatedCase(null);
@@ -75,7 +84,9 @@ export default function BookingModal({ show, movie, isOpen, onClose, onBookingCo
   const pricePerSeat = show.pricePerSeat || 0;
   const totalSeats = show.totalSeats || 60;
   const numTickets = selectedSeats.length;
-  const derivedTotalCost = numTickets * pricePerSeat;
+  const seatsCost = numTickets * pricePerSeat;
+  const addonsTotal = selectedAddons.reduce((sum, item) => sum + item.price, 0);
+  const derivedTotalCost = seatsCost + addonsTotal;
   const seatLayout = generateSeatLayout(totalSeats);
 
   const toggleSeat = (seatId) => {
@@ -90,6 +101,14 @@ export default function BookingModal({ show, movie, isOpen, onClose, onBookingCo
       setSelectedSeats(selectedSeats.filter((s) => s !== seatId));
     } else {
       setSelectedSeats([...selectedSeats, seatId]);
+    }
+  };
+
+  const toggleAddon = (addon) => {
+    if (selectedAddons.some((a) => a.id === addon.id)) {
+      setSelectedAddons(selectedAddons.filter((a) => a.id !== addon.id));
+    } else {
+      setSelectedAddons([...selectedAddons, addon]);
     }
   };
 
@@ -121,6 +140,7 @@ export default function BookingModal({ show, movie, isOpen, onClose, onBookingCo
         showId: show.id,
         numTickets: selectedSeats.length,
         selectedSeats,
+        addons: selectedAddons,
       });
 
       if (res.data.success) {
@@ -297,6 +317,48 @@ export default function BookingModal({ show, movie, isOpen, onClose, onBookingCo
                 )}
               </div>
 
+              {/* Pega Child Case: Food & Beverage & VIP Add-ons Selection */}
+              <div className="bg-slate-950 p-4 rounded-3xl border border-slate-800 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">🍿</span>
+                    <h5 className="font-bold text-xs text-slate-200">F&B & VIP Service Add-ons</h5>
+                  </div>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                    Pega Child Case Generator
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  {ADDON_OPTIONS.map((addon) => {
+                    const isSelected = selectedAddons.some((a) => a.id === addon.id);
+                    return (
+                      <button
+                        key={addon.id}
+                        type="button"
+                        onClick={() => toggleAddon(addon)}
+                        className={`p-2.5 rounded-xl border transition-all text-left flex items-center justify-between btn-interact ${
+                          isSelected
+                            ? 'bg-purple-500/10 border-purple-500/50 text-slate-100 shadow-sm'
+                            : 'bg-slate-900 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm">{addon.icon}</span>
+                          <div>
+                            <p className="font-semibold text-[11px] leading-tight">{addon.name}</p>
+                            <span className="text-[9px] text-slate-400">{addon.category}</span>
+                          </div>
+                        </div>
+                        <span className={`font-mono font-bold text-[11px] ${isSelected ? 'text-purple-300' : 'text-slate-400'}`}>
+                          +${addon.price.toFixed(2)}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               {/* Customer Input Fields */}
               <div className="space-y-3">
                 <div>
@@ -338,8 +400,10 @@ export default function BookingModal({ show, movie, isOpen, onClose, onBookingCo
                     </strong>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px]">Ticket Count</span>
-                    <strong className="text-slate-200 font-bold">{numTickets} ticket(s)</strong>
+                    <span className="text-slate-400 block text-[10px]">Ticket Count & Add-ons</span>
+                    <strong className="text-slate-200 font-bold">
+                      {numTickets} seat(s){selectedAddons.length > 0 ? ` + ${selectedAddons.length} add-on(s)` : ''}
+                    </strong>
                   </div>
                   <div>
                     <span className="text-slate-400 block text-[10px]">Total Cost</span>

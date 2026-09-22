@@ -1,5 +1,5 @@
 import React from 'react';
-import { Film, Home, Clapperboard, Calendar, Ticket, ShieldCheck, User, BookOpen, QrCode, Sparkles, Star } from 'lucide-react';
+import { Film, Home, Clapperboard, Calendar, Ticket, ShieldCheck, User, BookOpen, QrCode, Sparkles, Star, BarChart3 } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab, onOpenPegaGuide }) {
   const navItems = [
@@ -9,6 +9,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenPegaGuide }) {
     { id: 'bookings', label: 'My Bookings', icon: Ticket },
     { id: 'verify', label: 'Verify Ticket', icon: QrCode },
     { id: 'staff', label: 'Staff Portal', icon: ShieldCheck, badge: 'Pega Portal' },
+    { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   ];
 
   return (
